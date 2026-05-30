@@ -2,6 +2,11 @@
 #include <fstream>
 #include <string>
 using namespace std;
+int  baris = 119;
+string tabJudul = string(40, ' ');
+string tabMenu = string(35, ' ');
+
+
 
 struct Hotel {
     int idHotel;
@@ -33,11 +38,28 @@ int jumlahHotel = 0;
 int jumlahKamar = 0;
 int jumlahReservasi = 0;
 
-string adminUser[3] = {"admin1", "admin2", "admin3"};
+string adminUser[3] = {"Fajri", "Liza", "Rozak"};
 string adminPass[3] = {"123", "456", "789"};
 
 
 // ===================== FUNCTION & PROCEDURE =====================
+
+void garis (){
+	for (int i = 0; i <=baris; i++){
+		cout<<"=";
+	}
+}
+void pause() {
+    cout << "\n\n" << tabMenu << "Tekan ENTER untuk kembali...";
+    cin.ignore();
+    cin.get();
+}
+void header(string judul) {
+    system("cls");
+    garis();
+    cout << endl << endl << endl << endl;
+    cout << tabJudul << "===== " << judul << " =====" << endl;
+}
 
 void simpanHotel() {
     ofstream file("hotel.txt");
@@ -80,7 +102,93 @@ void simpanKamar() {
 
     file.close();
 }
+void tampilSemuaHotel() {
 
+    header("DAFTAR HOTEL");
+    garis();
+
+    if (jumlahHotel == 0) {
+        cout << "\n" << tabMenu << "Belum ada data hotel\n";
+        return;
+    }
+
+    for (int i = 0; i < jumlahHotel; i++) {
+
+        cout << "\n" << tabMenu << "Hotel ke-" << i + 1 << endl;
+        cout << tabMenu << "-----------------------------\n";
+
+        cout << tabMenu << "ID Hotel : " << hotel[i].idHotel << endl;
+        cout << tabMenu << "Nama     : " << hotel[i].namaHotel << endl;
+        cout << tabMenu << "Lokasi   : " << hotel[i].lokasi << endl;
+    }
+    pause();
+}
+
+
+string statusKamar(bool tersedia) {
+    if (tersedia)
+        return "Tersedia";
+    else
+        return "Tidak tersedia";
+}
+void tampilKamarTersedia() {
+
+    header("KAMAR TERSEDIA");
+    garis();
+
+    bool ada = false;
+
+    for (int i = 0; i < jumlahKamar; i++) {
+
+        if (kamar[i].tersedia) {
+
+            cout << "\n" << tabMenu << "Kamar ke-" << i + 1 << endl;
+            cout << tabMenu << "-----------------------------\n";
+
+            cout << tabMenu << "ID Kamar : " << kamar[i].idKamar << endl;
+            cout << tabMenu << "ID Hotel : " << kamar[i].idHotel << endl;
+            cout << tabMenu << "Tipe     : " << kamar[i].tipe << endl;
+            cout << tabMenu << "Harga    : Rp " << kamar[i].harga << endl;
+            cout << tabMenu << "Status   : " 
+                 << statusKamar(kamar[i].tersedia) << endl;
+
+            ada = true;
+        }
+        pause();
+    }
+
+    if (!ada) {
+        cout << "\n" << tabMenu << "Tidak ada kamar yang tersedia\n";
+    }
+
+    pause();
+}
+
+
+void tampilSemuaKamar() {
+
+    header("SEMUA DATA KAMAR");
+    garis();
+
+    if (jumlahKamar == 0) {
+        cout << "\n" << tabMenu << "Belum ada data kamar\n";
+        return;
+    }
+
+    for (int i = 0; i < jumlahKamar; i++) {
+
+        cout << "\n" << tabMenu << "Kamar ke-" << i + 1 << endl;
+        cout << tabMenu << "-----------------------------\n";
+
+        cout << tabMenu << "ID Kamar : " << kamar[i].idKamar << endl;
+        cout << tabMenu << "ID Hotel : " << kamar[i].idHotel << endl;
+        cout << tabMenu << "Tipe     : " << kamar[i].tipe << endl;
+        cout << tabMenu << "Harga    : Rp " << kamar[i].harga << endl;
+        cout << tabMenu << "Status   : " 
+             << statusKamar(kamar[i].tersedia) << endl;
+    }
+    pause();
+}
 void bacaKamar() {
     ifstream file("kamar.txt");
 
@@ -180,29 +288,41 @@ void insertionSortKamar() {
 // ===================== SEQUENTIAL SEARCH =====================
 
 void cariHotel() {
+
+    header("CARI HOTEL");
+    garis();
+
     string cari;
     bool ketemu = false;
 
     cin.ignore();
-    cout << "Masukkan nama hotel : ";
+
+    cout << "\n" << tabMenu << "Masukkan nama hotel : ";
     getline(cin, cari);
 
     for (int i = 0; i < jumlahHotel; i++) {
 
         if (hotel[i].namaHotel == cari) {
 
-            cout << "\nHotel ditemukan\n";
-            cout << "ID Hotel : " << hotel[i].idHotel << endl;
-            cout << "Nama     : " << hotel[i].namaHotel << endl;
-            cout << "Lokasi   : " << hotel[i].lokasi << endl;
+            if (!ketemu) {
+                cout << "\n" << tabMenu << "Hotel ditemukan:\n";
+            }
+
+            cout << "\n" << tabMenu << "Hotel ke-" << i + 1 << endl;
+            cout << tabMenu << "---------------------------\n";
+
+            cout << tabMenu << "ID Hotel : " << hotel[i].idHotel << endl;
+            cout << tabMenu << "Nama     : " << hotel[i].namaHotel << endl;
+            cout << tabMenu << "Lokasi   : " << hotel[i].lokasi << endl;
 
             ketemu = true;
         }
     }
 
     if (!ketemu) {
-        cout << "\nHotel tidak ditemukan\n";
+        cout << "\n" << tabMenu << "Hotel tidak ditemukan\n";
     }
+    pause();
 }
 
 // ===================== BINARY SEARCH =====================
@@ -241,49 +361,68 @@ void tampilReservasiRekursif(int index) {
     if (index == jumlahReservasi)
         return;
 
-    cout << "\nReservasi ke-" << index + 1 << endl;
-    cout << "Nama User : " << reservasi[index].namaUser << endl;
-    cout << "ID Hotel  : " << reservasi[index].idHotel << endl;
-    cout << "ID Kamar  : " << reservasi[index].idKamar << endl;
-    cout << "Lama Inap : " << reservasi[index].lamaInap << endl;
-    cout << "Total     : " << reservasi[index].total << endl;
+    cout << "\n" << tabMenu << "Reservasi ke-" << index + 1 << endl;
+    cout << tabMenu << "------------------------------\n";
+
+    cout << tabMenu << "Nama User : " << reservasi[index].namaUser << endl;
+    cout << tabMenu << "ID Hotel  : " << reservasi[index].idHotel << endl;
+    cout << tabMenu << "ID Kamar  : " << reservasi[index].idKamar << endl;
+    cout << tabMenu << "Lama Inap : " << reservasi[index].lamaInap << " hari" << endl;
+    cout << tabMenu << "Total     : Rp " << reservasi[index].total << endl;
 
     tampilReservasiRekursif(index + 1);
 }
-
 // ===================== USER =====================
 
 void pesanKamar() {
+
+    header("PESAN KAMAR");
+    garis();
 
     Reservasi r;
 
     cin.ignore();
 
-    cout << "Nama User : ";
+    cout << "\n" << tabMenu << "Nama User : ";
     getline(cin, r.namaUser);
 
-    cout << "ID Hotel  : ";
+    cout << tabMenu << "ID Hotel  : ";
     cin >> r.idHotel;
 
-    cout << "ID Kamar  : ";
+    cout << tabMenu << "ID Kamar  : ";
     cin >> r.idKamar;
 
     int index = binarySearchKamar(r.idKamar);
 
     if (index == -1) {
-        cout << "Kamar tidak ditemukan\n";
+        cout << "\n" << tabMenu << "Kamar tidak ditemukan\n";
         return;
     }
 
     if (!kamar[index].tersedia) {
-        cout << "Kamar tidak tersedia\n";
+        cout << "\n" << tabMenu << "Kamar tidak tersedia\n";
         return;
     }
 
-    cout << "Lama Inap : ";
+    cout << "\n" << tabMenu << "Detail Kamar:\n";
+    cout << tabMenu << "ID Kamar : " << kamar[index].idKamar << endl;
+    cout << tabMenu << "Tipe     : " << kamar[index].tipe << endl;
+    cout << tabMenu << "Harga    : Rp " << kamar[index].harga << endl;
+
+    cout << "\n" << tabMenu << "Lama Inap : ";
     cin >> r.lamaInap;
 
     r.total = kamar[index].harga * r.lamaInap;
+
+    char konfirmasi;
+    cout << "\n" << tabMenu << "Total Bayar : Rp " << r.total << endl;
+    cout << tabMenu << "Konfirmasi pesan? (y/n): ";
+    cin >> konfirmasi;
+
+    if (konfirmasi != 'y' && konfirmasi != 'Y') {
+        cout << "\n" << tabMenu << "Reservasi dibatalkan\n";
+        return;
+    }
 
     reservasi[jumlahReservasi++] = r;
 
@@ -292,34 +431,51 @@ void pesanKamar() {
     simpanReservasi();
     simpanKamar();
 
-    cout << "\nReservasi berhasil!\n";
+    cout << "\n" << tabMenu << "Reservasi berhasil!\n";
+    pause();
 }
 
 void lihatStruk() {
 
-    tampilReservasiRekursif(0);
+    header("STRUK RESERVASI");
+    garis();
+
+    if (jumlahReservasi == 0) {
+        cout << "\n" << tabMenu << "Belum ada reservasi\n";
+    } else {
+        tampilReservasiRekursif(0);
+    }
+
+    pause();
 }
 
 void cariKamar() {
 
+    header("CARI KAMAR");
+    garis();
+
     int id;
 
-    cout << "Masukkan ID kamar : ";
+    cout << "\n" << tabMenu << "Masukkan ID kamar : ";
     cin >> id;
 
     int index = binarySearchKamar(id);
 
     if (index != -1) {
 
-        cout << "\nKamar ditemukan\n";
-        cout << "ID Kamar : " << kamar[index].idKamar << endl;
-        cout << "Tipe     : " << kamar[index].tipe << endl;
-        cout << "Harga    : " << kamar[index].harga << endl;
+        cout << "\n" << tabMenu << "Kamar ditemukan\n\n";
+
+        cout << tabMenu << "ID Kamar : " << kamar[index].idKamar << endl;
+        cout << tabMenu << "Tipe     : " << kamar[index].tipe << endl;
+        cout << tabMenu << "Harga    : " << kamar[index].harga << endl;
+        cout << tabMenu << "Status   : "
+             << (kamar[index].tersedia ? "Tersedia" : "Tidak Tersedia") << endl;
     }
 
     else {
-        cout << "Kamar tidak ditemukan\n";
+        cout << "\n" << tabMenu << "Kamar tidak ditemukan\n";
     }
+    pause();
 }
 
 // ===================== ADMIN =====================
@@ -327,16 +483,17 @@ void cariKamar() {
 void editHotel() {
 
     Hotel h;
-
-    cout << "ID Hotel : ";
+    header("EDIT HOTEL");
+    cout<<endl;
+    cout <<tabMenu <<"ID Hotel : ";
     cin >> h.idHotel;
 
     cin.ignore();
 
-    cout << "Nama Hotel : ";
+    cout <<tabMenu<< "Nama Hotel : ";
     getline(cin, h.namaHotel);
 
-    cout << "Lokasi : ";
+    cout <<tabMenu<< "Lokasi : ";
     getline(cin, h.lokasi);
 
     hotel[jumlahHotel++] = h;
@@ -346,24 +503,74 @@ void editHotel() {
     simpanHotel();
 
     cout << "Hotel berhasil ditambahkan\n";
+    system("cls");
 }
+void hapusHotel() {
 
+    header("HAPUS HOTEL");
+    garis();
+
+    if (jumlahHotel == 0) {
+        cout << "\n" << tabMenu << "Belum ada data hotel\n";
+        pause();
+        return;
+    }
+
+    int id;
+    cout << "\n" << tabMenu << "Masukkan ID Hotel yang ingin dihapus: ";
+    cin >> id;
+
+    int index = -1;
+    for (int i = 0; i < jumlahHotel; i++) {
+        if (hotel[i].idHotel == id) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        cout << "\n" << tabMenu << "Hotel tidak ditemukan\n";
+        pause();
+        return;
+    }
+
+    for (int i = 0; i < jumlahKamar; i++) {
+        if (kamar[i].idHotel == id) {
+            cout << "\n" << tabMenu 
+                 << "Hotel tidak bisa dihapus karena masih memiliki kamar!\n";
+                 
+            pause();
+            return;
+        }
+    }
+
+    // ?? hapus data (geser array)
+    for (int i = index; i < jumlahHotel - 1; i++) {
+        hotel[i] = hotel[i + 1];
+    }
+
+    jumlahHotel--;
+
+    cout << "\n" << tabMenu << "Hotel berhasil dihapus\n";
+    simpanHotel();
+    pause();
+}
 void editKamar() {
-
+	header("EDIT KAMAR");
     Kamar k;
 
-    cout << "ID Kamar : ";
+    cout <<tabMenu<<"ID Kamar : ";
     cin >> k.idKamar;
 
-    cout << "ID Hotel : ";
+    cout <<tabMenu<<"ID Hotel : ";
     cin >> k.idHotel;
 
     cin.ignore();
 
-    cout << "Tipe Kamar : ";
+    cout <<tabMenu<<"Tipe Kamar : ";
     getline(cin, k.tipe);
 
-    cout << "Harga : ";
+    cout <<tabMenu<<"Harga : ";
     cin >> k.harga;
 
     k.tersedia = true;
@@ -375,23 +582,119 @@ void editKamar() {
     simpanKamar();
 
     cout << "Kamar berhasil ditambahkan\n";
+    system("cls");
 }
+void hapusKamar() {
 
+    header("HAPUS KAMAR");
+    garis();
+    cout << endl;
+	tampilSemuaKamar();
+    int id;
+    cout << "\n" << tabMenu << "Masukkan ID kamar: ";
+    cin >> id;
+
+    int index = -1;
+
+    // Cari kamar
+    for (int i = 0; i < jumlahKamar; i++) {
+        if (kamar[i].idKamar == id) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        cout << "\n" << tabMenu << "Kamar tidak ditemukan\n";
+        return;
+    }
+
+    // Cek apakah tersedia
+    if (!kamar[index].tersedia) {
+        cout << "\n" << tabMenu << "Kamar tidak bisa dihapus (sudah dipesan)\n";
+        return;
+    }
+
+    // Hapus (geser array)
+    for (int i = index; i < jumlahKamar - 1; i++) {
+        kamar[i] = kamar[i + 1];
+    }
+
+    jumlahKamar--;
+
+    simpanKamar();
+
+    cout << "\n" << tabMenu << "Kamar berhasil dihapus\n";
+    pause();
+}
+void hapusReservasi() {
+    header("HAPUS RESERVASI");
+
+    if (jumlahReservasi == 0) {
+        cout << "\n" << tabMenu << "Belum ada reservasi\n";
+        return;
+    }
+
+    
+    cout << endl;
+    tampilReservasiRekursif(0);
+
+    int pilih;
+    cout << "\n" << tabMenu << "Masukkan nomor reservasi: ";
+    cin >> pilih;
+
+    int index = pilih - 1;
+
+    if (index < 0 || index >= jumlahReservasi) {
+        cout << "\n" << tabMenu << "Pilihan tidak valid\n";
+        return;
+    }
+
+    int idKamar = reservasi[index].idKamar;
+
+    for (int i = 0; i < jumlahKamar; i++) {
+        if (kamar[i].idKamar == idKamar) {
+            kamar[i].tersedia = true;
+            break;
+        }
+    }
+
+    for (int i = index; i < jumlahReservasi - 1; i++) {
+        reservasi[i] = reservasi[i + 1];
+    }
+
+    jumlahReservasi--;
+
+    simpanReservasi();
+    simpanKamar();
+
+    cout << "\n" << tabMenu << "Reservasi berhasil dihapus\n";
+    pause();
+}
 void lihatReservasi() {
 
-    tampilReservasiRekursif(0);
-}
+    header("DATA RESERVASI");
+    garis();
 
+    if (jumlahReservasi == 0) {
+        cout << "\n" << tabMenu << "Belum ada reservasi\n";
+    } else {
+        tampilReservasiRekursif(0);
+    }
+
+    pause();
+}
 // ===================== LOGIN ADMIN =====================
 
 bool loginAdmin() {
-
+	
+	header("MENU LOGIN");
     string user, pass;
+    cout<<endl;
 
-    cout << "Username : ";
+    cout <<tabMenu<<"Username : ";
     cin >> user;
-
-    cout << "Password : ";
+    cout <<tabMenu<<"Password : ";
     cin >> pass;
 
     for (int i = 0; i < 3; i++) {
@@ -402,6 +705,7 @@ bool loginAdmin() {
     }
 
     return false;
+    system("cls");
 }
 
 // ===================== MENU USER =====================
@@ -411,13 +715,15 @@ void menuUser() {
     int pilih;
 
     do {
-
-        cout << "\n===== MENU USER =====\n";
-        cout << "1. Cari Hotel\n";
-        cout << "2. Pesan Kamar\n";
-        cout << "3. Lihat Struk\n";
-        cout << "4. Cari Kamar\n";
-        cout << "0. Keluar\n";
+    	header("MENU USER");	
+		cout <<tabMenu<< "1. Cari Hotel\n";
+		cout<<tabMenu<<"2. Pesan Kamar\n";
+		cout << tabMenu<<"3. Lihat Struk\n";
+		cout << tabMenu<<"4. Cari Kamar\n";
+		cout << tabMenu<<"5. Lihat Semua Hotel\n";
+		cout << tabMenu<<"6. Lihat Kamar Tersedia\n";
+		cout << tabMenu<<"7. Lihat Semua Kamar\n";
+		cout << tabMenu<<"0. Keluar\n";
 
         cout << "Pilih : ";
         cin >> pilih;
@@ -439,6 +745,16 @@ void menuUser() {
             case 4:
                 cariKamar();
                 break;
+            case 5:
+			    tampilSemuaHotel();
+			    break;
+
+			case 6:
+    			tampilKamarTersedia();
+   				 break;
+   			case 7:
+   				 tampilSemuaKamar();
+   				 break;
         }
 
     } while (pilih != 0);
@@ -453,20 +769,26 @@ void menuAdmin() {
         cout << "Login gagal\n";
         return;
     }
+    system("cls");
 
     int pilih;
 
     do {
-
-        cout << "\n===== MENU ADMIN =====\n";
-        cout << "1. Edit Hotel\n";
-        cout << "2. Edit Kamar\n";
-        cout << "3. Lihat List Reservasi\n";
-        cout << "0. Keluar\n";
+    	header("MENU ADMIN");	
+        cout <<tabMenu<<"1. Edit Hotel\n";
+        cout <<tabMenu<<"2. Edit Kamar\n";
+        cout <<tabMenu<<"3. Lihat List Reservasi\n";
+        cout<<tabMenu << "4. Hapus Kamar\n";
+        cout<<tabMenu << "5. Hapus Hotel\n";
+        cout<<tabMenu << "6. Hapus Reservasi\n";
+        cout<<tabMenu << "7. Lihat Semua Hotel\n";
+		cout<<tabMenu << "8. Lihat Kamar Tersedia\n";
+		cout<<tabMenu << "9. Lihat Semua Kamar\n";
+        cout <<tabMenu<<"0. Keluar\n";
 
         cout << "Pilih : ";
         cin >> pilih;
-
+        system("cls");
         switch (pilih) {
 
             case 1:
@@ -480,6 +802,25 @@ void menuAdmin() {
             case 3:
                 lihatReservasi();
                 break;
+            case 4:
+    			hapusKamar();
+    			break;
+    		case 5:
+  			  	hapusHotel();
+ 		   		break;
+    		case 6:
+  			  	hapusReservasi();
+ 		   		break;
+ 		   	case 7:
+			    tampilSemuaHotel();
+			    break;
+
+			case 8:
+    			tampilKamarTersedia();
+   				 break;
+   			case 9:
+   				 tampilSemuaKamar();
+   				 break;
         }
 
     } while (pilih != 0);
@@ -494,16 +835,16 @@ int main() {
     bacaReservasi();
 
     int pilih;
-
+	
     do {
-
-        cout << "\n===== PROGRAM PEMESANAN HOTEL =====\n";
-        cout << "1. User\n";
-        cout << "2. Admin\n";
-        cout << "0. Keluar\n";
+		header("PROGRAM PEMESANAN HOTEL");	
+        cout <<tabMenu<<"1. User\n";
+        cout <<tabMenu<<"2. Admin\n";
+        cout <<tabMenu<<"0. Keluar\n";
 
         cout << "Pilih : ";
         cin >> pilih;
+        system("cls");
 
         switch (pilih) {
 
@@ -516,7 +857,8 @@ int main() {
                 break;
         }
 
-    } while (pilih != 0);
 
-    return 0;
+    } 
+	while (pilih != 0);
+
 }
