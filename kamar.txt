@@ -1,1 +1,11 @@
+12|13|Mewah|12000|1
+13|13|Biasa|100000|1
+19|14|Biasa|100000|1
+11|14|Lumayan Mewah|110000|1
+13|14|Mewah|120000|1
+14|14|Mewah banget|140000|1
+15|14|Luar Biasa Mewah|150000|1
+14|13|Lumayan mewah|11000000|1
+15|13|Mewah banget|14000000|1
+16|13|Luar Biasa mewah|170000000|1
 
