@@ -173,29 +173,32 @@ void tampilKamarTersedia() {
 
 void tampilSemuaKamar() {
 
-    header("SEMUA DATA KAMAR");
-    garis();
+	for (int h = 0; h < jumlahHotel; h++) {
 
-    if (jumlahKamar == 0) {
-        cout << "\n" << tabMenu << "Belum ada data kamar\n";
-        pause();
-		return;
+    	cout << "\n" << tabMenu << "=== " << hotel[h].namaHotel << " ===\n";
+
+    	bool adaKamar = false;
+
+   	 for (int i = 0; i < jumlahKamar; i++) {
+        if (kamar[i].idHotel == hotel[h].idHotel) {
+
+            cout << tabMenu << "ID Kamar : " << kamar[i].idKamar << endl;
+            cout << tabMenu << "Tipe     : " << kamar[i].tipe << endl;
+            cout << tabMenu << "Harga    : Rp " << kamar[i].harga << endl;
+            cout << tabMenu << "Status   : "
+                 << statusKamar(kamar[i].tersedia) << endl;
+            cout << tabMenu << "------------------------\n";
+
+            adaKamar = true;
+        }
     }
 
-    for (int i = 0; i < jumlahKamar; i++) {
-
-        cout << "\n" << tabMenu << "Kamar ke-" << i + 1 << endl;
-        cout << tabMenu << "-----------------------------\n";
-
-        cout << tabMenu << "ID Kamar : " << kamar[i].idKamar << endl;
-        cout << tabMenu << "ID Hotel : " << kamar[i].idHotel << endl;
-        cout << tabMenu << "Tipe     : " << kamar[i].tipe << endl;
-        cout << tabMenu << "Harga    : Rp " << kamar[i].harga << endl;
-        cout << tabMenu << "Status   : " 
-             << statusKamar(kamar[i].tersedia) << endl;
-        pause();
-		return;
+    if (!adaKamar) {
+        cout << tabMenu << "Tidak ada kamar\n";
     }
+}
+
+pause();
 }
 void bacaKamar() {
     ifstream file("kamar.txt");
