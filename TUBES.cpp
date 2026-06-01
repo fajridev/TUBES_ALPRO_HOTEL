@@ -193,6 +193,8 @@ void tampilSemuaKamar() {
         cout << tabMenu << "Harga    : Rp " << kamar[i].harga << endl;
         cout << tabMenu << "Status   : " 
              << statusKamar(kamar[i].tersedia) << endl;
+        pause();
+		return;
     }
 }
 void bacaKamar() {
