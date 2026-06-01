@@ -109,7 +109,8 @@ void tampilSemuaHotel() {
 
     if (jumlahHotel == 0) {
         cout << "\n" << tabMenu << "Belum ada data hotel\n";
-        return;
+        pause();
+		return;
     }
 
     for (int i = 0; i < jumlahHotel; i++) {
@@ -153,15 +154,20 @@ void tampilKamarTersedia() {
                  << statusKamar(kamar[i].tersedia) << endl;
 
             ada = true;
+            pause();
+            return;
         }
-        pause();
+        
     }
 
     if (!ada) {
         cout << "\n" << tabMenu << "Tidak ada kamar yang tersedia\n";
+        pause();
+        return;
     }
 
-    pause();
+
+    
 }
 
 
@@ -172,7 +178,8 @@ void tampilSemuaKamar() {
 
     if (jumlahKamar == 0) {
         cout << "\n" << tabMenu << "Belum ada data kamar\n";
-        return;
+        pause();
+		return;
     }
 
     for (int i = 0; i < jumlahKamar; i++) {
@@ -187,7 +194,6 @@ void tampilSemuaKamar() {
         cout << tabMenu << "Status   : " 
              << statusKamar(kamar[i].tersedia) << endl;
     }
-    pause();
 }
 void bacaKamar() {
     ifstream file("kamar.txt");
@@ -589,6 +595,11 @@ void hapusKamar() {
     header("HAPUS KAMAR");
     garis();
     cout << endl;
+    if (jumlahKamar == 0) {
+        cout << "\n" << tabMenu << "Belum ada data kamar!\n";
+        pause();
+        return;
+    }
 	tampilSemuaKamar();
     int id;
     cout << "\n" << tabMenu << "Masukkan ID kamar: ";
@@ -606,6 +617,7 @@ void hapusKamar() {
 
     if (index == -1) {
         cout << "\n" << tabMenu << "Kamar tidak ditemukan\n";
+        pause();
         return;
     }
 
@@ -632,7 +644,8 @@ void hapusReservasi() {
 
     if (jumlahReservasi == 0) {
         cout << "\n" << tabMenu << "Belum ada reservasi\n";
-        return;
+        pause();
+        return;        
     }
 
     
