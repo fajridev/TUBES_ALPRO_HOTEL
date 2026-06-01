@@ -1,2 +1,4 @@
 14|Makapedia|Sunda
 13|Mapada|Jawa
+12|Favehotel|Bandung
+13|Zhotel|Bandung
