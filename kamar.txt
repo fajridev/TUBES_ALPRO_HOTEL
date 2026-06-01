@@ -12,4 +12,10 @@
 67|12|Suite Room|750|1
 23|12|Presidential suite|1000|1
 56|12|Premium|850000|1
+75|13|premium|650000|1
+11|13|junior room|725000|1
+7|13|double room|825000|1
+56|12|Premium|850000|1
+98|13|family room|985000|1
+
 
