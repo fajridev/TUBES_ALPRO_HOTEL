@@ -131,44 +131,8 @@ string statusKamar(bool tersedia) {
         return "Tersedia";
     else
         return "Tidak tersedia";
-}
-void tampilKamarTersedia() {
+} 
 
-    header("KAMAR TERSEDIA");
-    garis();
-
-    bool ada = false;
-
-    for (int i = 0; i < jumlahKamar; i++) {
-
-        if (kamar[i].tersedia) {
-
-            cout << "\n" << tabMenu << "Kamar ke-" << i + 1 << endl;
-            cout << tabMenu << "-----------------------------\n";
-
-            cout << tabMenu << "ID Kamar : " << kamar[i].idKamar << endl;
-            cout << tabMenu << "ID Hotel : " << kamar[i].idHotel << endl;
-            cout << tabMenu << "Tipe     : " << kamar[i].tipe << endl;
-            cout << tabMenu << "Harga    : Rp " << kamar[i].harga << endl;
-            cout << tabMenu << "Status   : " 
-                 << statusKamar(kamar[i].tersedia) << endl;
-
-            ada = true;
-            pause();
-            return;
-        }
-        
-    }
-
-    if (!ada) {
-        cout << "\n" << tabMenu << "Tidak ada kamar yang tersedia\n";
-        pause();
-        return;
-    }
-
-
-    
-}
 
 
 void tampilSemuaKamar() {
@@ -739,8 +703,7 @@ void menuUser() {
 		cout << tabMenu<<"3. Lihat Struk\n";
 		cout << tabMenu<<"4. Cari Kamar\n";
 		cout << tabMenu<<"5. Lihat Semua Hotel\n";
-		cout << tabMenu<<"6. Lihat Kamar Tersedia\n";
-		cout << tabMenu<<"7. Lihat Semua Kamar\n";
+		cout << tabMenu<<"6. Lihat Semua Kamar\n";
 		cout << tabMenu<<"0. Keluar\n";
 
         cout << "Pilih : ";
@@ -766,11 +729,7 @@ void menuUser() {
             case 5:
 			    tampilSemuaHotel();
 			    break;
-
-			case 6:
-    			tampilKamarTersedia();
-   				 break;
-   			case 7:
+   			case 6:
    				 tampilSemuaKamar();
    				 break;
         }
@@ -800,8 +759,7 @@ void menuAdmin() {
         cout<<tabMenu << "5. Hapus Hotel\n";
         cout<<tabMenu << "6. Hapus Reservasi\n";
         cout<<tabMenu << "7. Lihat Semua Hotel\n";
-		cout<<tabMenu << "8. Lihat Kamar Tersedia\n";
-		cout<<tabMenu << "9. Lihat Semua Kamar\n";
+		cout<<tabMenu << "8. Lihat Semua Kamar\n";
         cout <<tabMenu<<"0. Keluar\n";
 
         cout << "Pilih : ";
@@ -832,11 +790,7 @@ void menuAdmin() {
  		   	case 7:
 			    tampilSemuaHotel();
 			    break;
-
-			case 8:
-    			tampilKamarTersedia();
-   				 break;
-   			case 9:
+   			case 8:
    				 tampilSemuaKamar();
    				 break;
         }
