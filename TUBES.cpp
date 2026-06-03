@@ -30,9 +30,9 @@ struct Reservasi {
     int total;
 };
 
-Hotel hotel[100];
-Kamar kamar[100];
-Reservasi reservasi[100];
+Hotel hotel[1000000];
+Kamar kamar[1000000];
+Reservasi reservasi[1000000];
 
 int jumlahHotel = 0;
 int jumlahKamar = 0;
@@ -162,7 +162,7 @@ void tampilSemuaKamar() {
     }
 }
 
-pause();
+	pause();
 }
 void bacaKamar() {
     ifstream file("kamar.txt");
@@ -353,8 +353,14 @@ void pesanKamar() {
 
     header("PESAN KAMAR");
     garis();
+	cout << "\n" << tabMenu << "Daftar Hotel:\n";
+	for (int i = 0; i < jumlahHotel; i++) {
+    	cout << tabMenu << "- [" << hotel[i].idHotel << "] "<< hotel[i].namaHotel << endl;
+		}
 
-    Reservasi r;
+
+	bool ada = false;
+	Reservasi r;
 
     cin.ignore();
 
@@ -363,6 +369,19 @@ void pesanKamar() {
 
     cout << tabMenu << "ID Hotel  : ";
     cin >> r.idHotel;
+    cout << "\n" << tabMenu << "Kamar Tersedia:\n";
+    for (int i = 0; i < jumlahKamar; i++) {
+   	 if (kamar[i].idHotel == r.idHotel && kamar[i].tersedia) {
+        cout << tabMenu << "- ID Kamar: " << kamar[i].idKamar << endl;
+        ada = true;
+    	}
+	}
+
+	if (!ada) {
+    	cout << tabMenu << "Tidak ada kamar tersedia\n";
+    	pause();
+    	return;
+	}
 
     cout << tabMenu << "ID Kamar  : ";
     cin >> r.idKamar;
@@ -478,7 +497,7 @@ void editHotel() {
     simpanHotel();
 
     cout << "Hotel berhasil ditambahkan\n";
-    system("cls");
+    pause();
 }
 void hapusHotel() {
 
@@ -557,7 +576,7 @@ void editKamar() {
     simpanKamar();
 
     cout << "Kamar berhasil ditambahkan\n";
-    system("cls");
+    pause();
 }
 void hapusKamar() {
 
